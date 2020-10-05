@@ -27,7 +27,6 @@ module.exports = {
     async set(request, response){
         await getUsers(process.env.ASKOZIA_GET_ALL_EXTENSIONS, function (error, res, body) {  
             const allUsers = JSON.parse(body)
-            const ret = []
             allUsers.forEach(async function (user, array) {
                 const agent = {
                     userId: user.extension,
@@ -43,10 +42,9 @@ module.exports = {
                     const res = await User.create(agent);
                     console.log(`${user.descr} adicionado`)
                     console.info(`${agent.userId} ${agent.callerid} ${agent.description} criado`)
-                    ret.push(res)
                 };     
             });
-            response.json({ret})    
+            response.json({message: "Lista de usuários atualizada!", res})    
         })
     }
 }
