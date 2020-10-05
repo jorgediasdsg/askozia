@@ -12,11 +12,12 @@ module.exports = {
                 agents = queue.agents;
                 agents.forEach(async function (agent, array) {
                     agent = {
-                        extension,
-                        calls_today,
-                        last_call
+                        extension: agent.extension,
+                        calls_today: agent.calls_today,
+                        last_call: agent.last_call
                     }
                     const agentOnline = Queue.findOne({extension: agent.extension})
+                    console.log(agentOnline)
                     if(agentOnline){
                         console.log(`${agent.extension}  está conectado`)
                     } else {
@@ -26,7 +27,7 @@ module.exports = {
                     response.json({message: "Lista de usuários atualizada!", res})      
                 })
                 // const agentsOnline = Queue.find();
-                // return response.json(agentsOnline);
+                // return response.json(agentsOnline);  
             } else {
                 return    
             }
