@@ -28,7 +28,6 @@ module.exports = {
                         const res = Queue.create(agent);
                     }
                 })
-                response.json({message: "Lista de usuários atualizada!", res})      
                 // Verifica e remove os offline
                 agentsRecord.forEach(async function (agentRecord, array) {
                     const agents = queue.agents;
@@ -44,6 +43,7 @@ module.exports = {
                     // online = agents.find({extension : agentRecord.extension})
                     console.table(agentsRecord)     
                 })    
+                response.json({agentsRecord})           
             } else {  
                 return
             } 
