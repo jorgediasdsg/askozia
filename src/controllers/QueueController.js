@@ -6,6 +6,7 @@ require('dotenv/config');
 
 module.exports = {
     async get(request, response){
+        const agentsRecord = await Queue.find();  
         await getQueue(process.env.ASKOZIA_QUEUE_SHOW_STATUS, function (error, res, body) {  
             queue = JSON.parse(body)
             if (!error && response.statusCode == 200) {
@@ -21,19 +22,31 @@ module.exports = {
                     
                     // console.log(agentOnline)
                     if(agentOnline){
-                        console.log(`${agent.extension}  está conectado`)
+                        console.log(`${agent.extension}  estava conectado`)
                     } else {
                         console.log(`${agent.extension}  conectou agora!`)
                         const res = Queue.create(agent);
                     }
                 })
                 response.json({message: "Lista de usuários atualizada!", res})      
-                const agentsOnline = Queue.find();  
-                console.log(agentsOnline);
-                // return response.json(agentsOnline);        
-            } else {
-                return    
-            }
+                // Verifica e remove os offline
+                agentsRecord.forEach(async function (agentRecord, array) {
+                    const agents = queue.agents;
+                    const agentIndex = agents.findIndex(agent => agent.extension === agentRecord.extension)
+                    if (agentIndex < 0){
+                        // return response.status(400).json({ error: 'agent not found.'})
+                        const remove = await Queue.findByIdAndDelete(agentRecord)
+                        console.log(`${agentRecord.extension} saiu!`)
+                    } else {
+                        console.log(`${agentRecord.extension} está Online`)
+                        // return response.status(200).json({ error: 'Ok.'})
+                    }
+                    // online = agents.find({extension : agentRecord.extension})
+                    console.table(agentsRecord)     
+                })    
+            } else {  
+                return
+            } 
         })
     }
 }
