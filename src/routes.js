@@ -4,6 +4,7 @@ const routes = express.Router()
 
 const ProductController = require('./controllers/ProductController')
 const UserController = require('./controllers/UserController')
+const QueueController = require('./controllers/QueueController')
 
 routes.get('/products', ProductController.index)
 routes.get('/products/:id', ProductController.show)
@@ -15,5 +16,7 @@ routes.get('/allusers', UserController.get)
 routes.get('/users', UserController.index)
 routes.post('/users', UserController.store)
 routes.get('/userss', UserController.set)
+
+routes.get('/queue', QueueController.get)
 
 module.exports = routes
