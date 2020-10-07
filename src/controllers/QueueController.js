@@ -14,8 +14,14 @@ module.exports = {
             queue = JSON.parse(body)
             // console.table(queue)
             // if (!error && response.statusCode == 200) {
-                agents = queue.agents;
-                // Verifica e cadastra os online
+            agents = queue.agents;
+            // Verifica e cadastra os online
+            if(!agents){
+                if(fistRun==true){
+                console.log("Ninguem online")
+                send.alert("Ninguem online");
+                }
+            } else {
                 agents.forEach(async function (agent, array) {
                     agent = {
                         extension: agent.extension,
@@ -40,6 +46,7 @@ module.exports = {
                         const res = Queue.create(agent);
                     }
                 })
+            
                 // Verifica e remove os offline
                 agentsRecord.forEach(async function (agentRecord, array) {
                     const userName = await User.getUser(agentRecord.extension)
@@ -58,13 +65,14 @@ module.exports = {
                     // online = agents.find({extension : agentRecord.extension})
                     // console.table(agentsRecord)     
                 })    
-                // console.table(agents)
-                fistRun = false;
+            }
+            // console.table(agents)
+            fistRun = false;
             // if (!error && response.statusCode == 200) {
             //         response.json({agents})        
             // } else {  
             //     return
             // } 
-        })
+        }) 
     }
 }
