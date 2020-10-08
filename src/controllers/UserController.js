@@ -26,11 +26,7 @@ module.exports = {
     async get(request, response){
         await getUsers(process.env.ASKOZIA_GET_ALL_EXTENSIONS, function (error, res, body) {  
             allUsers = JSON.parse(body)
-            if (!error && response.statusCode == 200) {
-                return response.json(allUsers);
-            } else {
-                return
-            }
+                return allUsers;
         })
     },
     async set(request, response){

@@ -22,10 +22,10 @@ const QueueServer = require('./src/controllers/QueueController')
 send.alert(msg)
 async function server(){
     const queue = QueueServer.get()
-    await console.log(queue) 
+    // await console.log(queue) 
     // await QueueServer
 }
-setInterval(server, 2000)
-server
 
-app.listen(3001);
+app.listen(3002);
+console.log("Monitorando...")
+setInterval(server, 2000)

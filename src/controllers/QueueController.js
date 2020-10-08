@@ -16,6 +16,9 @@ module.exports = {
             // if (!error && response.statusCode == 200) {
             agents = queue.agents;
             // Verifica e cadastra os online
+            if(fistRun==true){
+                User.get(); 
+            }
             if(!agents){
                 if(fistRun==true){
                 console.log("Ninguem online")
